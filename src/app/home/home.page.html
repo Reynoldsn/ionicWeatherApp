@@ -1,14 +1,58 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+<ion-header no-border>
+  <ion-toolbar class="wa-navbar">
+    <div *ngIf="!searching">
+      <ion-title class="wa-header__title">
+          Weather
+        </ion-title>
+      <ion-buttons slot="start">
+        <ion-button (click)="toggleSearch()">
+          <ion-icon class="icon" slot="icon-only" name="search"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </div>
+    <div *ngIf="searching">
+      <ion-item lines="none" no-padding>
+        <ion-label class="wa-zip">
+          <ion-buttons>
+            <ion-button (click)="toggleSearch()">
+              <ion-icon class="icon" slot="icon-only" name="arrow-back"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-label>
+        <ion-input class="wa-input"
+                    placeholder="89123"
+                    type="number"
+                    [(ngModel)]="zipcode">
+        </ion-input>
+        <ion-buttons class="wa-nav__button" slot="end">
+            <ion-button class="wa-nav__button--zip" (click)="getWeather(zipcode)">
+              <ion-icon class="icon" slot="icon-only" name="search"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+      </ion-item>
+    </div>
   </ion-toolbar>
 </ion-header>
-
-<ion-content>
-  <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
+<ion-content text-center>
+  <div *ngIf="weatherResults">
+    <div class="wa-temp__location">
+      {{ location }}
+    </div>
+    <div class="wa-temp__container">
+      <div class="wa-temp__high-low">
+        {{ minTemp }}&deg; | {{ maxTemp }}&deg;
+      </div>
+      <div class="wa-temp__current">
+        {{ currentWeather }}&deg;
+      </div>
+      <ion-row class="wa-temp__container-footer">
+        <ion-col col-6>
+          {{ percip }}%
+        </ion-col>
+        <ion-col col-6>
+          {{ wind }}mph
+        </ion-col>
+      </ion-row>
+    </div>
   </div>
 </ion-content>
